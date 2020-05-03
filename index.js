@@ -1,10 +1,12 @@
 const db = require("./models");
+const cors = require("cors");
 const express = require("express"); // Import Express มาไว้ใช้
 const app = express(); // สร้าง Express App ขึ้นมา
 // Express จัดการ HTTP Request
 
 const studentRoutes = require("./routes/student");
 
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
