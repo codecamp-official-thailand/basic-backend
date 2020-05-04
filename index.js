@@ -5,12 +5,16 @@ const app = express(); // สร้าง Express App ขึ้นมา
 // Express จัดการ HTTP Request
 
 const studentRoutes = require("./routes/student");
+const userRoutes = require("./routes/user");
+
+require("./config/passport/passport"); // เป็นการบอกให้ passport สร้าง strategy ทั้งหมดที่เราเขียนไว้
 
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.use("/students", studentRoutes);
+app.use("/users", userRoutes);
 
 db.sequelize.sync().then(() => {
   // สั่งให้ Sequelize ไป Sync Database ให้ตรงกับ Models ของเรา
