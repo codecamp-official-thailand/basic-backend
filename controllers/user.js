@@ -42,6 +42,7 @@ const loginUser = async (req, res) => {
       const payload = {
         // ใส่ข้อมูลที่จะแนบไปกับ Token ไว้ใน object ที่ชื่อว่า payload
         id: user.id,
+        name: user.name,
       };
 
       // ทำการ generate token ขึ้นมาโดยให้มีอายุ 3600 วินาที และมี secret เป็น "codecamp5" และส่ง payload ให้แนบไปกับ token ด้วย
