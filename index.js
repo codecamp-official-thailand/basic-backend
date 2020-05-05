@@ -16,7 +16,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use("/students", studentRoutes);
 app.use("/users", userRoutes);
 
-db.sequelize.sync().then(() => {
+db.sequelize.sync({ force: false }).then(() => {
   // สั่งให้ Sequelize ไป Sync Database ให้ตรงกับ Models ของเรา
   app.listen(8000, () => {
     console.log(`Server is running on port 8000`);

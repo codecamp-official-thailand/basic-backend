@@ -5,6 +5,7 @@ const jwt = require("jsonwebtoken");
 const registerUser = async (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
+  const name = req.body.name;
 
   const user = await db.User.findOne({ where: { username: username } }); // ค้นหาว่า username นี้มีใน database หรือยัง
 
@@ -18,6 +19,7 @@ const registerUser = async (req, res) => {
     await db.User.create({
       username: username,
       password: hashedPassword,
+      name: name,
     });
 
     res.status(201).send({ message: "User created" });
@@ -30,13 +32,15 @@ const loginUser = async (req, res) => {
 
   const user = await db.User.findOne({ where: { username } }); // หาว่ามี Username นี้ใน database ไหม
 
-  if (!user) { // ถ้าไม่มีก็ส่งไปว่า username หรีอ password ผิด
+  if (!user) {
+    // ถ้าไม่มีก็ส่งไปว่า username หรีอ password ผิด
     res.status(400).send({ message: "Invalid username or password" });
   } else {
     const isSuccess = bcryptjs.compareSync(password, user.password); // เทียบ password ที่ส่งมาจาก postman กับ user.password ที่มาจาก database ว่าตรงกันไหมถ้าตรงกันก็จะคืนเป็น TrueD
 
     if (isSuccess) {
-      const payload = { // ใส่ข้อมูลที่จะแนบไปกับ Token ไว้ใน object ที่ชื่อว่า payload
+      const payload = {
+        // ใส่ข้อมูลที่จะแนบไปกับ Token ไว้ใน object ที่ชื่อว่า payload
         id: user.id,
       };
 
